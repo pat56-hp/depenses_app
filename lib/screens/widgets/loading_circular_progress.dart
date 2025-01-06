@@ -5,14 +5,17 @@ class LoadingCircularProgress extends StatelessWidget {
 
   final double? size;
   final Color? color;
-  
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: CircularProgressIndicator(
-        color: color ?? Theme.of(context).colorScheme.secondary,
-        strokeWidth: size ?? 4.0
+      child: SizedBox(
+        height: 30,
+        width: 30,
+        child: CircularProgressIndicator(
+          color: color ?? Theme.of(context).colorScheme.secondary,
+          strokeWidth: 2.0,
+        ),
       ),
     );
   }

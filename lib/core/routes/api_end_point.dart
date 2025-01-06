@@ -3,5 +3,7 @@ abstract class ApiEndPoint {
   static const String apiUrl = apiBaseUrl + '/api/v1';
   static const String login = '/login';
   static const String register = '/register';
+  static const String verifyEmail = '/verify/email';
+  static const String verifyCode = '/verify/code';
   static const String updateProfile = '/profile/update';
 }

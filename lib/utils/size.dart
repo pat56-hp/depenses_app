@@ -9,6 +9,8 @@ class AppSize {
   static const double elevated = 10.0;
   static const double buttonPaddingVeritical = 16.0;
   static const double buttonPaddingHorizontal = 16.0;
+  static const double buttonWidgetPaddingVertical = 12.0;
+  static const double buttonWidgetPaddingHorizontal = 16.0;
   static const double borderRadius = 15;
   static const double icon = 24;
 }

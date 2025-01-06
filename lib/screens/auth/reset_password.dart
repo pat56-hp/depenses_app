@@ -18,6 +18,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   final int codeLength = 6;
   late List<TextEditingController> controllers;
   late List<FocusNode> focusNodes;
+  final arguments = Get.arguments;
 
   @override
   void initState() {
@@ -95,7 +96,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   extra: {'textAlign': TextAlign.center},
                 ),
                 subtitle(
-                  label: 'patrickkouassi7@gmail.com',
+                  label: arguments['email'] ?? 'Introuvable',
                   extra: {
                     'textAlign': TextAlign.center,
                     'fontWeight': FontWeight.bold

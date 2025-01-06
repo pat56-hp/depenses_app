@@ -15,6 +15,7 @@ class ApiService {
   static void initializeInterceptors() {
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
+        print("Requête interceptée : ${options.uri}");
         //Ajout du token
         options.headers['Accept'] = 'application/json';
         final token = Get.find<AuthController>().getToken();
@@ -27,12 +28,16 @@ class ApiService {
       },
       onError: (DioException e, handler) async {
         await handleApiError(e);
-        return handler.next(e);
+        return handler.reject(e);
       },
     ));
   }
 
   static Future<void> handleApiError(DioException e) async {
+    print('######## Erreur détectée : ${e.message}');
+    print('######## Status code: ${e.response?.statusCode}');
+    print('######## Détails: ${e.response?.data}');
+
     try {
       switch (e.response?.statusCode) {
         case 401:
@@ -49,7 +54,7 @@ class ApiService {
           if (dataError != null) {
             showErrors(dataError);
           } else {
-            showDialogWidget('Erreur de validation',
+            alert('error',
                 'Une erreur est survenue lors de la validation des données');
           }
           break;
@@ -57,18 +62,19 @@ class ApiService {
         case 406:
           final message =
               e.response?.data['message'] ?? 'Une erreur est survenue';
-          showDialogWidget('Oups !', message);
+          alert('error', message);
           break;
 
         default:
-          print('######## Status code : ${e.response?.statusCode}');
-          showDialogWidget('Erreur',
+          print('######## Erreur inattendue : ${e.response?.statusCode}');
+          print('######## Détails : ${e.response?.data}');
+          alert('error',
               'Une erreur inattendue est survenue. Veuillez réessayer.');
           break;
       }
     } catch (error) {
-      print('Erreur lors du traitement de l\'erreur: $error');
-      showDialogWidget('Erreur', 'Une erreur inattendue est survenue');
+      print('######## Erreur lors du traitement de l\'erreur: $error');
+      alert('error', 'Une erreur inattendue est survenue');
     }
   }
 

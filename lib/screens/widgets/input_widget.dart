@@ -63,8 +63,7 @@ class InputWidget extends StatelessWidget {
       style: const TextStyle(color: AppColor.textColor, fontSize: AppSize.text),
       decoration: InputDecoration(
         counterText: "",
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: 18),
         hintText: hintText,
         hintStyle: TextStyle(
           color: hintTextColor ?? AppColor.inputPlaceholderColor,

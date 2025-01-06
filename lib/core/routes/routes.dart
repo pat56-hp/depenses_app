@@ -1,3 +1,4 @@
+import 'package:depenses/core/bindings/binding.dart';
 import 'package:depenses/screens/home/home.dart';
 import 'package:get/get.dart';
 import 'package:depenses/screens/auth/forgot_password.dart';
@@ -10,10 +11,23 @@ import 'package:get/route_manager.dart';
 class Routes {
   static List<GetPage<dynamic>> appRoutes = [
     GetPage(name: '/onboading', page: () => const Onboading()),
-    GetPage(name: '/login', page: () => const Login()),
-    GetPage(name: '/register', page: () => const Register()),
-    GetPage(name: '/forgot_password', page: () => const ForgotPassword()),
-    GetPage(name: '/reset_password', page: () => const ResetPassword()),
+    GetPage(
+      name: '/login',
+      page: () => const Login(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+        name: '/register',
+        page: () => const Register(),
+        binding: AuthBinding()),
+    GetPage(
+        name: '/forgot_password',
+        page: () => const ForgotPassword(),
+        binding: ForgotBinding()),
+    GetPage(
+        name: '/reset_password',
+        page: () => const ResetPassword(),
+        binding: AuthBinding()),
     GetPage(name: '/home', page: () => const Home())
   ];
 }

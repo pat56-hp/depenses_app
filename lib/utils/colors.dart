@@ -11,6 +11,7 @@ class AppColor {
   static const Color buttonLightColor = Color(0xFF000000);
   static const Color buttonDarkColor = Color.fromARGB(255, 68, 68, 68);
   static const Color inputPlaceholderColor = Color(0xFFA3A3A3);
+  static const Color buttonLoading = Color.fromARGB(255, 236, 236, 236);
   static const Color inputBorderActive = Color(0xFFA3A3A3);
   static const Color inputBorderError = Color(0xFFFF575F);
   static const Color iconColor = Color(0xFF6A6A6A);
