@@ -1,4 +1,3 @@
-import 'package:depenses/core/controllers/authController.dart';
 import 'package:depenses/core/routes/routes.dart';
 import 'package:depenses/core/services/api_service.dart';
 import 'package:depenses/screens/onboading/onboading.dart';

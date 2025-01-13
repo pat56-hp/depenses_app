@@ -97,7 +97,7 @@ void showDialogWidget(String title, String content) {
     confirm: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: ButtonWidget(
-          label: 'Compris',
+          label: 'Fermer',
           labelSize: AppSize.text,
           verticalPadding: AppSize.buttonWidgetPaddingVertical,
           horizontalPadding: AppSize.buttonWidgetPaddingHorizontal,
@@ -135,7 +135,7 @@ void alert(String type, String content) {
                   extra: {'textAlign': TextAlign.center}),
               spaceHeight(18.0),
               ButtonWidget(
-                  label: 'Compris',
+                  label: 'Fermer',
                   labelSize: AppSize.text,
                   verticalPadding: AppSize.buttonWidgetPaddingVertical,
                   horizontalPadding: AppSize.buttonWidgetPaddingHorizontal,

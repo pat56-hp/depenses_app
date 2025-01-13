@@ -5,5 +5,6 @@ abstract class ApiEndPoint {
   static const String register = '/register';
   static const String verifyEmail = '/verify/email';
   static const String verifyCode = '/verify/code';
+  static const String resetPassword = '/resetPassword';
   static const String updateProfile = '/profile/update';
 }

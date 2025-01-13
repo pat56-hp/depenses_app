@@ -1,4 +1,5 @@
 import 'package:depenses/core/bindings/binding.dart';
+import 'package:depenses/screens/auth/verify_code.dart';
 import 'package:depenses/screens/home/home.dart';
 import 'package:get/get.dart';
 import 'package:depenses/screens/auth/forgot_password.dart';
@@ -20,6 +21,10 @@ class Routes {
         name: '/register',
         page: () => const Register(),
         binding: AuthBinding()),
+    GetPage(
+        name: '/verify_code',
+        page: () => const VerifyCode(),
+        binding: ForgotBinding()),
     GetPage(
         name: '/forgot_password',
         page: () => const ForgotPassword(),

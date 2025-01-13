@@ -1,3 +1,4 @@
+import 'package:depenses/screens/auth/controllers/forgot_controller.dart';
 import 'package:depenses/screens/widgets/button.dart';
 import 'package:depenses/screens/widgets/input_widget.dart';
 import 'package:depenses/utils/colors.dart';
@@ -16,45 +17,43 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
   final int codeLength = 6;
-  late List<TextEditingController> controllers;
-  late List<FocusNode> focusNodes;
+  final ForgotController _forgotController = Get.find<ForgotController>();
+  late TextEditingController _emailController = TextEditingController();
+  late TextEditingController _passwordController = TextEditingController();
+  late TextEditingController _passwordConfirmationController =
+      TextEditingController();
   final arguments = Get.arguments;
+  bool _passwordIsObscure = true;
+  bool _confirmPasswordIsObscure = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    controllers = List.generate(codeLength, (_) => TextEditingController());
-    focusNodes = List.generate(codeLength, (_) => FocusNode());
+    _emailController.text = arguments['email'];
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    controllers.forEach((controller) => controller.dispose());
-    focusNodes.forEach((focusNode) => focusNode.dispose());
+    _passwordController.dispose();
+    _passwordConfirmationController.dispose();
   }
 
-  void onTextChanged(String value, int index) {
-    if (value.isNotEmpty && index < codeLength - 1) {
-      focusNodes[index + 1].requestFocus();
-    } else if (value.isEmpty && index > 0) {
-      focusNodes[index - 1].requestFocus();
-    }
-  }
-
-  void onPaste(String pastedText) {
-    for (int i = 0; i < pastedText.length; i++) {
-      controllers[i].text = pastedText[i];
-    }
-    if (pastedText.length == codeLength) {
-      focusNodes.last.requestFocus();
-    }
+  //Envoie des datas pour reinitialisation
+  void sendToReset() {
+    _forgotController.resetPassword(
+      email: arguments['email'],
+      password: _passwordController.text,
+      passwordConfirmation: _passwordConfirmationController.text,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    print(arguments['email']);
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -80,69 +79,138 @@ class _ResetPasswordState extends State<ResetPassword> {
         ),
         backgroundColor: AppColor.backgroundColorWhite,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppSize.paddingHorizontal),
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                spaceHeight(60.0),
-                title(
-                    label: 'Réinitialisation du mot de passe',
-                    size: AppSize.title),
-                spaceHeight(16.0),
-                subtitle(
-                  label: 'Nous avons envoyé un code de vérification à ',
-                  extra: {'textAlign': TextAlign.center},
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppSize.paddingHorizontal),
+                child: Column(
+                  children: [
+                    title(
+                        label: 'Réinitialisation du mot de passe',
+                        size: AppSize.title),
+                    spaceHeight(16.0),
+                    subtitle(
+                      label: 'Veuillez renseigner tous les champs',
+                      extra: {'textAlign': TextAlign.center},
+                    ),
+                    spaceHeight(60.0),
+                    Obx(() {
+                      return InputWidget(
+                        controller: _emailController,
+                        hintText: "Adresse email",
+                        prefixIcon: "assets/icons/envelope.svg",
+                        value: arguments['email'] ?? '',
+                        readOnly: true,
+                        clickFunction: () {},
+                        errorText:
+                            _forgotController.resetEmailError.value.isNotEmpty
+                                ? _forgotController.resetEmailError.value
+                                : null,
+                      );
+                    }),
+                    spaceHeight(22.0),
+                    Stack(
+                      children: [
+                        Obx(() {
+                          return InputWidget(
+                            controller: _passwordController,
+                            hintText: "Mot de passe",
+                            prefixIcon: 'assets/icons/lock.svg',
+                            obscureText: _passwordIsObscure,
+                            errorText: _forgotController
+                                    .resetPasswordError.value.isNotEmpty
+                                ? _forgotController.resetPasswordError.value
+                                : null,
+                          );
+                        }),
+                        Positioned(
+                          top: 18,
+                          right: 14,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _passwordIsObscure = !_passwordIsObscure;
+                              });
+                            },
+                            child: SizedBox(
+                              child: SvgPicture.asset(
+                                _passwordIsObscure
+                                    // ignore: dead_code
+                                    ? 'assets/icons/eye.svg'
+                                    : 'assets/icons/low-eye.svg',
+                                color: AppColor.iconColor,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    spaceHeight(22.0),
+                    Stack(
+                      children: [
+                        Obx(() {
+                          return InputWidget(
+                            controller: _passwordConfirmationController,
+                            hintText: "Confirmation du mot de passe",
+                            prefixIcon: 'assets/icons/lock.svg',
+                            obscureText: _confirmPasswordIsObscure,
+                            errorText: _forgotController
+                                    .resetConfirmationError.value.isNotEmpty
+                                ? _forgotController.resetConfirmationError.value
+                                : null,
+                          );
+                        }),
+                        Positioned(
+                          top: 18,
+                          right: 14,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _confirmPasswordIsObscure =
+                                    !_confirmPasswordIsObscure;
+                              });
+                            },
+                            child: SizedBox(
+                              child: SvgPicture.asset(
+                                _confirmPasswordIsObscure
+                                    // ignore: dead_code
+                                    ? 'assets/icons/eye.svg'
+                                    : 'assets/icons/low-eye.svg',
+                                color: AppColor.iconColor,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    spaceHeight(22.0),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Obx(() {
+                        return ButtonWidget(
+                          label: 'Réinitiliser le mot de passe',
+                          onPressed: () => sendToReset(),
+                          buttonColor: AppColor.buttonLightColor,
+                          loading: _forgotController.loadingReset.value,
+                        );
+                      }),
+                    ),
+                    spaceHeight(50.0),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      text(
+                          label: 'Vous avez déjà un compte ?',
+                          extra: {'fontWeight': FontWeight.w300}),
+                      spaceWidth(4.0),
+                      InkWell(
+                          onTap: () => Get.offAllNamed('/login'),
+                          child: text(
+                              label: 'Connectez-vous',
+                              extra: {'fontWeight': FontWeight.w600}))
+                    ])
+                  ],
                 ),
-                subtitle(
-                  label: arguments['email'] ?? 'Introuvable',
-                  extra: {
-                    'textAlign': TextAlign.center,
-                    'fontWeight': FontWeight.bold
-                  },
-                ),
-                spaceHeight(60.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(codeLength, (index) {
-                    return Container(
-                      margin: const EdgeInsets.only(right: 9),
-                      width: MediaQuery.of(context).size.width * 0.12,
-                      child: InputWidget(
-                        hintText: "",
-                        controller: controllers[index],
-                        focusNode: focusNodes[index],
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.center,
-                        maxLength: 1,
-                        onChanged: (value) => onTextChanged(value, index),
-                      ),
-                    );
-                  }),
-                ),
-                spaceHeight(22.0),
-                SizedBox(
-                  width: double.infinity,
-                  child: ButtonWidget(
-                    label: 'Continuer',
-                    onPressed: () {},
-                    buttonColor: AppColor.buttonLightColor,
-                  ),
-                ),
-                spaceHeight(50.0),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  text(
-                      label: 'Vous n\'avez pas reçu de code ?',
-                      extra: {'fontWeight': FontWeight.w300}),
-                  spaceWidth(4.0),
-                  InkWell(
-                      onTap: () {},
-                      child: text(
-                          label: 'Renvoyer',
-                          extra: {'fontWeight': FontWeight.w600}))
-                ])
-              ],
+              ),
             ),
           ),
         ),
