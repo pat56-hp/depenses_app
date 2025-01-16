@@ -7,12 +7,12 @@ class ButtonOtherLogin extends StatelessWidget {
       {super.key, required this.image, required this.onPress});
 
   final String image;
-  final Function onPress;
+  final VoidCallback onPress;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () => onPress,
+        onPressed: onPress,
         style: const ButtonStyle(
           elevation: WidgetStatePropertyAll(0),
           backgroundColor:

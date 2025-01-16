@@ -1,4 +1,5 @@
 import 'package:depenses/core/controllers/authController.dart';
+import 'package:depenses/screens/auth/socialite/socialite.dart';
 import 'package:depenses/screens/auth/widgets/ButtonOtherLogin.dart';
 import 'package:depenses/screens/widgets/button.dart';
 import 'package:depenses/screens/widgets/input_widget.dart';
@@ -157,23 +158,7 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     spaceHeight(40.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ButtonOtherLogin(
-                          image: 'assets/images/facebook.png',
-                          onPress: () {},
-                        ),
-                        ButtonOtherLogin(
-                          image: 'assets/images/github.png',
-                          onPress: () {},
-                        ),
-                        ButtonOtherLogin(
-                          image: 'assets/images/google.png',
-                          onPress: () {},
-                        )
-                      ],
-                    ),
+                    const Socialite(),
                     spaceHeight(50.0),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       text(
