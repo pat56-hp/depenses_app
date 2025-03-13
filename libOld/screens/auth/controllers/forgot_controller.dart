@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:depenses/core/routes/api_end_point.dart';
 import 'package:depenses/core/services/api_service.dart';
 import 'package:depenses/utils/helper.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 class ForgotController extends GetxController {
@@ -69,7 +71,7 @@ class ForgotController extends GetxController {
       }
     } catch (e) {
       loading.value = false;
-      print('######## Une erreur inattendue s\'est produite : $e');
+      print('######## Une erreur inattendue s\'est produite : ' + e.toString());
     }
   }
 
@@ -94,7 +96,7 @@ class ForgotController extends GetxController {
       Get.toNamed('/reset_password', arguments: {'email': email});
     } catch (e) {
       loadingCode.value = false;
-      print('######## Une erreur inattendue s\'est produite : $e');
+      print('######## Une erreur inattendue s\'est produite : ' + e.toString());
     }
   }
 
@@ -152,7 +154,7 @@ class ForgotController extends GetxController {
       print('######### data : $data');
     } catch (e) {
       loadingReset.value = false;
-      print('######## Une erreur inattendue s\'est produite : $e');
+      print('######## Une erreur inattendue s\'est produite : ' + e.toString());
     }
   }
 }

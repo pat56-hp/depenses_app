@@ -48,7 +48,6 @@ class _RegisterState extends State<Register> {
         name: _userNameController.text,
         email: _emailController.text,
         password: _passwordController.text,
-        type: 'mobile',
       );
     }
 
@@ -118,7 +117,7 @@ class _RegisterState extends State<Register> {
                               onTap: () {
                                 setState(() {
                                   _passwordIsObscure = !_passwordIsObscure;
-                                  print('is click : $_passwordIsObscure');
+                                  print('is click : ${_passwordIsObscure}');
                                 });
                               },
                               child: SizedBox(

@@ -1,3 +1,4 @@
+import 'package:depenses/core/controllers/authController.dart';
 import 'package:depenses/screens/auth/controllers/forgot_controller.dart';
 import 'package:depenses/screens/widgets/button.dart';
 import 'package:depenses/screens/widgets/input_widget.dart';

@@ -1,5 +1,6 @@
 import 'package:depenses/core/controllers/authController.dart';
 import 'package:depenses/screens/auth/socialite/socialite.dart';
+import 'package:depenses/screens/auth/widgets/ButtonOtherLogin.dart';
 import 'package:depenses/screens/widgets/button.dart';
 import 'package:depenses/screens/widgets/input_widget.dart';
 import 'package:depenses/utils/colors.dart';

@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:depenses/core/models/user.dart';
 import 'package:depenses/core/routes/api_end_point.dart';
 import 'package:depenses/core/services/api_service.dart';
-import 'package:depenses/screens/auth/controllers/socialiteController.dart';
 import 'package:depenses/utils/helper.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 //import 'package:dio/dio.dart' as dio;
 import 'package:get_storage/get_storage.dart';
@@ -20,9 +20,6 @@ class AuthController extends GetxController {
   final Rx<User?> user = Rx<User?>(null);
   final RxString userEmailError = ''.obs;
   final RxString userPasswordError = ''.obs;
-
-  final SocialiteController socialiteController =
-      Get.put(SocialiteController());
 
   void reset() {
     loading.value = false;
@@ -78,7 +75,7 @@ class AuthController extends GetxController {
 
         showSnackBarWidget(
             type: 'success',
-            content: 'Content de vous revoir 😃 ${user.value!.name}');
+            content: 'Content de vous revoir 😃 ' + user.value!.name);
 
         //Redirection vers la page home
         Get.offAllNamed('/home');
@@ -90,19 +87,13 @@ class AuthController extends GetxController {
   }
 
   //Register utilisateur
-  Future<void> register(
-      {String? name, String? email, String? password, String? type}) async {
+  Future<void> register({String? name, String? email, String? password}) async {
     loading.value = true;
-
-    await Future.delayed(const Duration(seconds: 1));
 
     try {
       final response = await ApiService.post(ApiEndPoint.register,
-          {'name': name, 'email': email, 'password': password, 'type': type});
+          {'name': name, 'email': email, 'password': password});
 
-      /* print('####### Response : ${response.toString()}');
-      return;
-      return; */
       if (response.statusCode == 200) {
         final data = response.data;
 
@@ -112,9 +103,6 @@ class AuthController extends GetxController {
         user.value = User.fromJson(data['user']);
 
         printStorageContent();
-
-        //Arret du loading sur les RS
-        socialiteController.loadingFinish();
 
         //Redirection vers la page home
         Get.offAllNamed('/home');

@@ -12,8 +12,5 @@ class AppSize {
   static const double buttonWidgetPaddingVertical = 12.0;
   static const double buttonWidgetPaddingHorizontal = 16.0;
   static const double borderRadius = 15;
-  static const double borderRadiusLarge = 30;
   static const double icon = 24;
-  static const double bodyPadding = 18.0;
-  static const double spacing = 40;
 }

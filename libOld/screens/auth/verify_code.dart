@@ -35,12 +35,8 @@ class _VerifyCodeState extends State<VerifyCode> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    for (var controller in controllers) {
-      controller.dispose();
-    }
-    for (var focusNode in focusNodes) {
-      focusNode.dispose();
-    }
+    controllers.forEach((controller) => controller.dispose());
+    focusNodes.forEach((focusNode) => focusNode.dispose());
   }
 
   void onTextChanged(String value, int index) {

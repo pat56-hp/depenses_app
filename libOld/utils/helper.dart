@@ -126,7 +126,7 @@ void alert(String type, String content) {
               SizedBox(
                 height: 50,
                 width: 50,
-                child: Image.asset('assets/images/$type.png'),
+                child: Image.asset('assets/images/' + type + '.png'),
               ),
               spaceHeight(22.0),
               text(

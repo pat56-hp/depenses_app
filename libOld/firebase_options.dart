@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,9 +28,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -42,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAYDyTfv2POU3uaMRSoskTOU689fUa1eRQ',
-    appId: '1:86196871198:android:50327b67e4bfaf6eef8e0f',
+    appId: '1:86196871198:android:1c11b2f26f279b82ef8e0f',
     messagingSenderId: '86196871198',
     projectId: 'my-depenses-project',
     storageBucket: 'my-depenses-project.firebasestorage.app',
@@ -54,38 +63,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '86196871198',
     projectId: 'my-depenses-project',
     storageBucket: 'my-depenses-project.firebasestorage.app',
-    androidClientId: '86196871198-s0r5tol1opkg74haqdoms8as006ie1av.apps.googleusercontent.com',
-    iosClientId: '86196871198-o24vg28p7jn55tuqma6hvdcjlemom6qn.apps.googleusercontent.com',
     iosBundleId: 'com.example.depenses',
   );
-
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAxXvKNxUPYzz7fc00I3h1_DKT4QPn5rsQ',
-    appId: '1:86196871198:web:d5b45e4ae089974fef8e0f',
-    messagingSenderId: '86196871198',
-    projectId: 'my-depenses-project',
-    authDomain: 'my-depenses-project.firebaseapp.com',
-    storageBucket: 'my-depenses-project.firebasestorage.app',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBVjtM4w9PafNybegnI2uPA03Keotc5vIY',
-    appId: '1:86196871198:ios:355371937a8f2da8ef8e0f',
-    messagingSenderId: '86196871198',
-    projectId: 'my-depenses-project',
-    storageBucket: 'my-depenses-project.firebasestorage.app',
-    androidClientId: '86196871198-s0r5tol1opkg74haqdoms8as006ie1av.apps.googleusercontent.com',
-    iosClientId: '86196871198-4p607ioi76jtuhvssi9e5snhubn35vsb.apps.googleusercontent.com',
-    iosBundleId: 'com.example.mobile',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAxXvKNxUPYzz7fc00I3h1_DKT4QPn5rsQ',
-    appId: '1:86196871198:web:c8bc9831ced3d5f0ef8e0f',
-    messagingSenderId: '86196871198',
-    projectId: 'my-depenses-project',
-    authDomain: 'my-depenses-project.firebaseapp.com',
-    storageBucket: 'my-depenses-project.firebasestorage.app',
-  );
-
 }

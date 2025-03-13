@@ -18,10 +18,9 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   final int codeLength = 6;
   final ForgotController _forgotController = Get.find<ForgotController>();
-  late final TextEditingController _emailController = TextEditingController();
-  late final TextEditingController _passwordController =
-      TextEditingController();
-  late final TextEditingController _passwordConfirmationController =
+  late TextEditingController _emailController = TextEditingController();
+  late TextEditingController _passwordController = TextEditingController();
+  late TextEditingController _passwordConfirmationController =
       TextEditingController();
   final arguments = Get.arguments;
   bool _passwordIsObscure = true;
