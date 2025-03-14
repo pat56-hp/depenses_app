@@ -27,14 +27,12 @@ class ForgotController extends GetxController {
   @override
   void onInit() {
     reset();
-    print('Initialisation');
     super.onInit();
   }
 
   @override
   void onClose() {
     reset();
-    print('Fermeture');
     super.onClose();
   }
 
@@ -87,7 +85,7 @@ class ForgotController extends GetxController {
     }
 
     try {
-      final response = await ApiService.post(
+      await ApiService.post(
           ApiEndPoint.verifyCode, {'email': email, 'code': code});
 
       loadingCode.value = false;

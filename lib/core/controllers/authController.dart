@@ -33,9 +33,10 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    reset();
-    print('Initialisation');
     super.onInit();
+    reset();
+    _loadUserFromStorage();
+    print('Initialisation');
   }
 
   @override
@@ -43,6 +44,13 @@ class AuthController extends GetxController {
     reset();
     print('Fermeture');
     super.onClose();
+  }
+
+  void _loadUserFromStorage() {
+    final storedUser = _storage.read(_userKey);
+    if (storedUser != null) {
+      user.value = User.fromJson(jsonDecode(storedUser));
+    }
   }
 
   //Login utilisateur
@@ -65,8 +73,8 @@ class AuthController extends GetxController {
         //On cree la session
         final data = response.data;
 
-        print('#############');
-        print("#### data access_token : $data['user']");
+        //print('#############');
+        //print("#### data access_token : $data['user']");
 
         //Sauvegarde des infos dans le storage local
         await _storage.write(_tokenKey, data['access_token']);
@@ -74,14 +82,16 @@ class AuthController extends GetxController {
 
         user.value = User.fromJson(data['user']);
 
-        printStorageContent();
+        print('User : ${user.value?.toJson()}');
+
+        //printStorageContent();
 
         showSnackBarWidget(
             type: 'success',
             content: 'Content de vous revoir 😃 ${user.value!.name}');
 
         //Redirection vers la page home
-        Get.offAllNamed('/home');
+        Get.offAllNamed('/navigation');
       }
     } catch (e) {
       loading.value = false;
@@ -111,13 +121,13 @@ class AuthController extends GetxController {
 
         user.value = User.fromJson(data['user']);
 
-        printStorageContent();
+        //printStorageContent();
 
         //Arret du loading sur les RS
         socialiteController.loadingFinish();
 
         //Redirection vers la page home
-        Get.offAllNamed('/home');
+        Get.offAllNamed('/navigation');
       }
     } catch (e) {
       loading.value = false;
@@ -126,10 +136,25 @@ class AuthController extends GetxController {
   }
 
   //Logout utilisateur
-  Future<void> logout() async {}
+  Future<void> logout() async {
+    try {
+      clearSession();
+      Get.offAllNamed('/login');
+    } catch (e) {
+      print("Une erreur est survenue lors de la déconnexion : $e");
+      alert('error', 'Une erreur est survenue lors de la déconnexion');
+    }
+  }
 
-  //Restoration de la session de l'utilisateur
-  Future<void> restoreSession() async {}
+  Future<void> clearSession() async {
+    try {
+      await _storage.remove(_userKey);
+      await _storage.remove(_tokenKey);
+      user.value = null;
+    } catch (e) {
+      print("Une erreur est survenue lors de la déconnexion : $e");
+    }
+  }
 
   bool validateFields(String email, String password) {
     bool isValid = true;
@@ -157,10 +182,46 @@ class AuthController extends GetxController {
     return _storage.read(_tokenKey);
   }
 
+  //Restoration de la session de l'utilisateur
+  Future<void> restoreSession() async {
+    try {
+      final token = getToken();
+      final userData = _storage.read(_userKey);
+
+      printStorageContent();
+
+      //Si le token & les data user existent
+      //On recupere les informations dans le local et on le redirige vers la navigation (Home)
+      if (token != null && userData != null) {
+        user.value = User.fromJson(jsonDecode(userData));
+        Get.offAllNamed('/navigation');
+      } else {
+        //On affiche un message d'erreur et interromp la session
+        showSnackBarWidget(
+          type: 'error',
+          content:
+              'Votre session a été interrompue ! Veuillez vous connecter svp.',
+        );
+
+        throw new Exception('Session expirée');
+      }
+    } catch (e) {
+      print('Erreur lors de la restoration de la session : $e');
+      clearSession();
+      Get.offAllNamed('/onboading');
+    }
+  }
+
   void printStorageContent() {
     print('################# Contenu du storage: ##################');
     print('Token: ${_storage.read(_tokenKey)}');
     print('User: ${_storage.read(_userKey)}');
     print('################# Fin ##################');
+  }
+
+  void initAuthState() {
+    Timer(const Duration(seconds: 6), () async {
+      await restoreSession();
+    });
   }
 }
