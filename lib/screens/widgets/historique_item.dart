@@ -21,10 +21,11 @@ class HistoriqueItem extends StatelessWidget {
               Container(
                 height: 45,
                 width: 45,
-                padding: const EdgeInsets.all(AppSize.buttonPaddingHorizontal),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                     color: AppColor.backgroundColorWhite,
                     borderRadius: BorderRadius.circular(22)),
+                child: Image.asset('assets/images/entree.png'),
               ),
               spaceWidth(8.0),
               Column(
@@ -33,14 +34,18 @@ class HistoriqueItem extends StatelessWidget {
                   subtitle(
                       label: 'Achat de timbre',
                       extra: {'fontWeight': FontWeight.w500}),
-                  text(
-                      label: 'le 05/03/2025',
-                      extra: {'fontWeight': FontWeight.w300}),
+                  text(label: 'Sortie', extra: {'fontWeight': FontWeight.w300}),
                 ],
               )
             ],
           ),
-          text(label: '500 FCFA', extra: {'fontWeight': FontWeight.w400})
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              text(label: '500 FCFA', extra: {'fontWeight': FontWeight.w400}),
+              text(label: '05/03/2025', extra: {'fontWeight': FontWeight.w300}),
+            ],
+          )
         ],
       ),
     );

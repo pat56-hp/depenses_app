@@ -17,7 +17,7 @@ class _NavigationState extends State<Navigation> {
 
   static final List _screens = [
     const Home(),
-    const Statistique(),
+    //const Statistique(),
     const Configuration()
   ];
 
@@ -49,14 +49,14 @@ class _NavigationState extends State<Navigation> {
                 label: 'Accueil',
                 icon: 'assets/icons/home.svg',
               ),
-              NavigationItem(
+              /* NavigationItem(
                 index: 1,
                 selectedIndex: _selectedIndex,
                 label: 'Statistiques',
                 icon: 'assets/icons/stats.svg',
-              ),
+              ), */
               NavigationItem(
-                index: 2,
+                index: 1,
                 selectedIndex: _selectedIndex,
                 label: 'Paramètres',
                 icon: 'assets/icons/config.svg',

@@ -1,9 +1,11 @@
 import 'package:depenses/screens/home/widgets/calendar_section.dart';
 import 'package:depenses/screens/home/widgets/home_top_bar.dart';
 import 'package:depenses/screens/widgets/historique_item.dart';
+import 'package:depenses/utils/colors.dart';
 import 'package:depenses/utils/helper.dart';
 import 'package:depenses/utils/size.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
@@ -25,6 +27,19 @@ class _HomeState extends State<Home> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
       locale: const Locale('fr', 'FR'),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+              primaryColor: AppColor.backgroundColor,
+              hintColor: AppColor.inputPlaceholderColor,
+              colorScheme: const ColorScheme.light(
+                  primary: AppColor.buttonLightColor,
+                  onPrimary: AppColor.backgroundColorWhite,
+                  surface: AppColor.backgroundColor,
+                  onSurface: AppColor.textColor)),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null && picked != selectedDate) {
@@ -54,13 +69,42 @@ class _HomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  subtitle(label: 'Historiques des dépenses'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      subtitle(label: 'Historiques des dépenses'),
+                      GestureDetector(
+                        onTap: () => _selectedDate(context),
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: AppColor.soldeColor,
+                          ),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/calendar.svg',
+                                color: AppColor.iconColor,
+                                width: 18,
+                              ),
+                              spaceWidth(8.0),
+                              text(
+                                  label: formattedDate,
+                                  extra: {'fontWeight': FontWeight.w300}),
+                              const Icon(Icons.arrow_drop_down),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                   spaceHeight(AppSize.paddingVertical),
                   Expanded(
                     child: ListView.builder(
                       // shrinkWrap: true,
                       //physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 10,
+                      itemCount: 6,
                       itemBuilder: (context, index) => const HistoriqueItem(),
                     ),
                   )
