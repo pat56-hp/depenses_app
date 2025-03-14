@@ -20,36 +20,46 @@ class NavigationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NavigationDestination(
-      selectedIcon: Column(
-        children: [
-          SvgPicture.asset(
-            icon,
-            height: AppSize.icon,
-            width: AppSize.icon,
-            color: selectedIndex == index
-                ? AppColor.textColor
-                : AppColor.iconColor,
-          ),
-          spaceHeight(8.0),
-          text(label: label, extra: {
-            'fontweight':
-                selectedIndex == index ? FontWeight.w400 : FontWeight.w300
-          })
-        ],
+      selectedIcon: Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: Column(
+          children: [
+            SvgPicture.asset(
+              icon,
+              height: AppSize.icon,
+              width: AppSize.icon,
+              color: selectedIndex == index
+                  ? AppColor.textColor
+                  : AppColor.iconColor,
+            ),
+            //spaceHeight(8.0),
+            text(label: label, extra: {
+              'fontweight':
+                  selectedIndex == index ? FontWeight.w400 : FontWeight.w300
+            })
+          ],
+        ),
       ),
-      icon: Column(
-        children: [
-          SvgPicture.asset(
-            icon,
-            height: AppSize.icon,
-            width: AppSize.icon,
-            color: AppColor.iconColor,
-          ),
-          spaceHeight(8.0),
-          text(label: label, fontSize: 14.0, color: AppColor.iconColor, extra: {
-            'fontweight': FontWeight.w200,
-          })
-        ],
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: Column(
+          children: [
+            SvgPicture.asset(
+              icon,
+              height: AppSize.icon,
+              width: AppSize.icon,
+              color: AppColor.iconColor,
+            ),
+            //spaceHeight(8.0),
+            text(
+                label: label,
+                fontSize: 14.0,
+                color: AppColor.iconColor,
+                extra: {
+                  'fontweight': FontWeight.w200,
+                })
+          ],
+        ),
       ),
       label: 'label',
     );

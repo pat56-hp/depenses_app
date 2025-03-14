@@ -1,7 +1,6 @@
 import 'package:depenses/screens/home/widgets/calendar_section.dart';
 import 'package:depenses/screens/home/widgets/home_top_bar.dart';
 import 'package:depenses/screens/widgets/historique_item.dart';
-import 'package:depenses/utils/colors.dart';
 import 'package:depenses/utils/helper.dart';
 import 'package:depenses/utils/size.dart';
 import 'package:flutter/material.dart';

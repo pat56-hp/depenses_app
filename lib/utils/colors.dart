@@ -15,8 +15,10 @@ class AppColor {
   static const Color inputBorderActive = Color(0xFFA3A3A3);
   static const Color inputBorderError = Color(0xFFFF575F);
   static const Color iconColor = Color(0xFF6A6A6A);
+  static const Color border = Color(0xFF6A6A6A);
   static const Color inputColor = Color(0xFFF2F2F2);
   static const Color line = Color(0xFFAFAFAF);
+  static const Color configLine = Color.fromARGB(167, 221, 221, 221);
   static const Color otherBorderColor = Color.fromARGB(255, 203, 203, 203);
   static const Color successColor = Color.fromARGB(255, 28, 239, 57);
 }
