@@ -26,7 +26,7 @@ class _CalendarSectionState extends State<CalendarSection> {
             horizontal: AppSize.paddingHorizontal,
           ),
           decoration: BoxDecoration(
-              color: AppColor.soldeColor,
+              color: AppColor.backgroundColorWhite,
               borderRadius: BorderRadius.circular(AppSize.borderRadius)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +34,7 @@ class _CalendarSectionState extends State<CalendarSection> {
               Row(
                 children: [
                   SvgPicture.asset(
-                    'assets/icons/briefcase.svg',
+                    'assets/icons/sold.svg',
                     //color: Colors.white,
                     width: AppSize.icon,
                     height: AppSize.icon,
