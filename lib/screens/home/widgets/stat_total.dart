@@ -5,11 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class StatSection extends StatefulWidget {
-  const StatSection(
-      {super.key, required this.selectedDate, required this.formattedDate});
+  const StatSection({
+    super.key,
+    required this.selectedDate,
+    required this.formattedDate,
+    required this.solde,
+    required this.totalRevenues,
+    required this.totalDepenses,
+  });
 
   final Function selectedDate;
   final String formattedDate;
+  final int solde;
+  final int totalRevenues;
+  final int totalDepenses;
 
   @override
   State<StatSection> createState() => _StatSectionState();
@@ -52,7 +61,7 @@ class _StatSectionState extends State<StatSection> {
               Row(
                 children: [
                   text(
-                      label: '30 000',
+                      label: formatMontant(widget.solde),
                       //color: AppColor.backgroundColorWhite,
                       fontSize: 25.0,
                       extra: {'fontweight': FontWeight.w600}),
@@ -102,7 +111,9 @@ class _StatSectionState extends State<StatSection> {
                     spaceHeight(10.0),
                     Row(
                       children: [
-                        text(label: '50 000', fontSize: AppSize.title),
+                        text(
+                            label: formatMontant(widget.totalRevenues),
+                            fontSize: AppSize.title),
                         spaceWidth(10.0),
                         text(
                           label: 'FCFA',
@@ -149,7 +160,9 @@ class _StatSectionState extends State<StatSection> {
                     spaceHeight(10.0),
                     Row(
                       children: [
-                        text(label: '25 000', fontSize: AppSize.title),
+                        text(
+                            label: formatMontant(widget.totalDepenses),
+                            fontSize: AppSize.title),
                         spaceWidth(10.0),
                         text(
                           label: 'FCFA',

@@ -3,6 +3,7 @@ import 'package:depenses/utils/colors.dart';
 import 'package:depenses/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 Text buttonText({label, color}) {
   return Text(label, style: color);
@@ -109,6 +110,7 @@ void showDialogWidget(String title, String content) {
   );
 }
 
+//Modal d'alert erreur ou succes
 void alert(String type, String content) {
   Get.dialog(
     Column(
@@ -150,6 +152,7 @@ void alert(String type, String content) {
   );
 }
 
+//SnackBar widget pour erreur ou success
 void showSnackBarWidget({
   String type = 'info',
   required String content,
@@ -188,4 +191,10 @@ void showSnackBarWidget({
     title,
     content,
   );
+}
+
+String formatMontant(int montant) {
+  return NumberFormat.currency(locale: 'fr_FR', symbol: '', decimalDigits: 0)
+      .format(montant)
+      .replaceAll('\u202F', ' ');
 }

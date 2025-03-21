@@ -23,7 +23,7 @@ class ConfigItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => link!(),
+      onTap: () => link(),
       child: Column(
         children: [
           Row(

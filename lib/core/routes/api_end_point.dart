@@ -10,4 +10,6 @@ abstract class ApiEndPoint {
   static const String loginWithSocial = '/auth/socialite';
   static const String updateProfile = '/profile/update';
   static const String updatePassword = '/profile/update/password';
+  static const String historique = '/historiques';
+  static const String deleteHistorique = '/historiques/delete';
 }

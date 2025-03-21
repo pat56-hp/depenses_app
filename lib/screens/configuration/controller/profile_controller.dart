@@ -82,13 +82,12 @@ class ProfileController extends GetxController {
     print('################################################################');
 
     try {
-      final response = await ApiService.post(ApiEndPoint.updatePassword, {
+      await ApiService.post(ApiEndPoint.updatePassword, {
         'oldpassword': currentPassword,
         'newpassword': newPassword,
         'password_confirmation': confirmPassword,
       });
 
-      final data = response.data;
       showSnackBarWidget(
         type: 'success',
         content: 'Mot de passe modifié avec succès',
