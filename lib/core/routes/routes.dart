@@ -22,7 +22,7 @@ class Routes {
     GetPage(
       name: '/navigation',
       page: () => const Navigation(),
-      binding: AuthBinding(),
+      bindings: [AuthBinding(), HomeBinding()],
     ),
     GetPage(
       name: '/login',
@@ -48,7 +48,7 @@ class Routes {
     GetPage(
       name: '/home',
       page: () => const Home(),
-      binding: AuthBinding(),
+      bindings: [AuthBinding(), HomeBinding()],
     )
   ];
 }

@@ -53,7 +53,7 @@ class InputWidget extends StatelessWidget {
       readOnly: readOnly,
       keyboardType: keyboardType ?? TextInputType.text,
       onTap: () {
-        if (readOnly == true) {
+        if (readOnly == true && clickFunction != null) {
           clickFunction!();
         }
       },
@@ -62,7 +62,8 @@ class InputWidget extends StatelessWidget {
       style: const TextStyle(color: AppColor.textColor, fontSize: AppSize.text),
       decoration: InputDecoration(
         counterText: "",
-        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: 18),
+        contentPadding: const EdgeInsets.symmetric(
+            horizontal: 5, vertical: AppSize.paddingVertical),
         hintText: hintText,
         hintStyle: TextStyle(
           color: hintTextColor ?? AppColor.inputPlaceholderColor,

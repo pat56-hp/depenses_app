@@ -20,29 +20,32 @@ class _HomeTopBarState extends State<HomeTopBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            text(label: "Bienvenue", extra: {'fontWeight': FontWeight.w300}),
-            Obx(() => subtitle(
-                  label:
-                      _authController.user.value?.name ?? 'Utilisateur inconnu',
-                  extra: {'fontWeight': FontWeight.bold},
-                )),
-          ],
-        ),
-        InkWell(
-          onTap: () => _authController.logout(),
-          child: SvgPicture.asset(
-            'assets/icons/power.svg',
-            width: AppSize.icon,
-            color: AppColor.iconColor,
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSize.bodyPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              text(label: "Bienvenue", extra: {'fontWeight': FontWeight.w300}),
+              Obx(() => subtitle(
+                    label: _authController.user.value?.name ??
+                        'Utilisateur inconnu',
+                    extra: {'fontWeight': FontWeight.bold},
+                  )),
+            ],
           ),
-        )
-      ],
+          InkWell(
+            onTap: () => _authController.logout(),
+            child: SvgPicture.asset(
+              'assets/icons/power.svg',
+              width: AppSize.icon,
+              color: AppColor.iconColor,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

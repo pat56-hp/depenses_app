@@ -46,7 +46,7 @@ class ApiService {
             content:
                 'Votre session a été interrompue ! Veuillez vous connecter svp.',
           );
-          await Get.find<AuthController>().logout();
+          await Get.put(AuthController()).logout();
           break;
 
         case 422:

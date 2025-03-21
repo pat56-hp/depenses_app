@@ -15,51 +15,54 @@ class ConfigItem extends StatelessWidget {
 
   final String label;
   final String icon;
-  final String link;
+  final Function link;
 
   final int lenght;
   final int index;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                SvgPicture.asset(
-                  icon,
-                  color: AppColor.iconColor,
-                  width: 20.0,
-                  height: 20.0,
-                ),
-                spaceWidth(9.0),
-                subtitle(label: label)
-              ],
-            ),
-            SvgPicture.asset(
-              'assets/icons/icon-right.svg',
-              color: AppColor.iconColor,
-              width: AppSize.icon,
-              height: AppSize.icon,
-            ),
-          ],
-        ),
-        index + 1 != lenght
-            ? Column(
+    return InkWell(
+      onTap: () => link!(),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 children: [
-                  spaceHeight(20.0),
-                  Container(
-                    color: AppColor.configLine,
-                    height: 1.0,
+                  SvgPicture.asset(
+                    icon,
+                    color: AppColor.iconColor,
+                    width: 20.0,
+                    height: 20.0,
                   ),
-                  spaceHeight(20.0)
+                  spaceWidth(9.0),
+                  subtitle(label: label)
                 ],
-              )
-            : const SizedBox.shrink(),
-      ],
+              ),
+              SvgPicture.asset(
+                'assets/icons/icon-right.svg',
+                color: AppColor.iconColor,
+                width: AppSize.icon,
+                height: AppSize.icon,
+              ),
+            ],
+          ),
+          index + 1 != lenght
+              ? Column(
+                  children: [
+                    spaceHeight(20.0),
+                    Container(
+                      color: AppColor.configLine,
+                      height: 1.0,
+                    ),
+                    spaceHeight(20.0)
+                  ],
+                )
+              : const SizedBox.shrink(),
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:depenses/utils/colors.dart';
 import 'package:depenses/utils/helper.dart';
-import 'package:depenses/utils/size.dart';
 import 'package:flutter/material.dart';
 
 class HistoriqueItem extends StatelessWidget {

@@ -16,6 +16,8 @@ class ButtonWidget extends StatelessWidget {
     this.verticalPadding,
     this.horizontalPadding,
     this.loading,
+    this.border = false,
+    this.borderColor,
   });
 
   final String label;
@@ -27,6 +29,9 @@ class ButtonWidget extends StatelessWidget {
   final VoidCallback onPressed;
   final Icon? icon;
   final bool? loading;
+
+  final bool border;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +46,9 @@ class ButtonWidget extends StatelessWidget {
               horizontal: horizontalPadding ?? AppSize.buttonPaddingHorizontal),
         ),
         shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+          side: border
+              ? BorderSide(color: borderColor ?? AppColor.border)
+              : BorderSide.none,
           borderRadius: BorderRadius.circular(AppSize.borderRadius),
         )),
       ),

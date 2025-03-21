@@ -4,18 +4,18 @@ import 'package:depenses/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class CalendarSection extends StatefulWidget {
-  const CalendarSection(
+class StatSection extends StatefulWidget {
+  const StatSection(
       {super.key, required this.selectedDate, required this.formattedDate});
 
   final Function selectedDate;
   final String formattedDate;
 
   @override
-  State<CalendarSection> createState() => _CalendarSectionState();
+  State<StatSection> createState() => _StatSectionState();
 }
 
-class _CalendarSectionState extends State<CalendarSection> {
+class _StatSectionState extends State<StatSection> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -71,10 +71,7 @@ class _CalendarSectionState extends State<CalendarSection> {
           children: [
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: AppSize.paddingHorizontal,
-                  horizontal: AppSize.paddingHorizontal,
-                ),
+                padding: const EdgeInsets.all(AppSize.paddingVertical),
                 decoration: BoxDecoration(
                   color: AppColor.backgroundColorWhite,
                   borderRadius: BorderRadius.circular(AppSize.borderRadius),
@@ -120,10 +117,7 @@ class _CalendarSectionState extends State<CalendarSection> {
             spaceWidth(20.0),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: AppSize.paddingHorizontal,
-                  horizontal: AppSize.paddingHorizontal,
-                ),
+                padding: const EdgeInsets.all(AppSize.paddingVertical),
                 decoration: BoxDecoration(
                   color: AppColor.backgroundColorWhite,
                   borderRadius: BorderRadius.circular(AppSize.borderRadius),
