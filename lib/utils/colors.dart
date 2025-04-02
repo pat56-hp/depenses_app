@@ -21,6 +21,7 @@ class AppColor {
   static const Color configLine = Color.fromARGB(167, 221, 221, 221);
   static const Color otherBorderColor = Color.fromARGB(255, 203, 203, 203);
   static const Color successColor = Color.fromARGB(255, 28, 239, 57);
+  static const Color errorColor = Color(0xFFFF575F);
   static const Color revenueColor = Color.fromARGB(255, 220, 252, 231);
   static const Color sortieColor = Color.fromARGB(255, 254, 226, 226);
   static const Color soldeColor = Color.fromARGB(255, 238, 238, 238);

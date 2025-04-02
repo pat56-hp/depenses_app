@@ -1,6 +1,7 @@
 import 'package:depenses/core/bindings/binding.dart';
 import 'package:depenses/screens/auth/verify_code.dart';
 import 'package:depenses/screens/home/home.dart';
+import 'package:depenses/screens/home/show.dart';
 import 'package:depenses/screens/splash.dart';
 import 'package:depenses/screens/widgets/navigation/bottom_navigation.dart';
 import 'package:get/get.dart';
@@ -49,6 +50,11 @@ class Routes {
       name: '/home',
       page: () => const Home(),
       bindings: [AuthBinding(), HomeBinding()],
-    )
+    ),
+    GetPage(
+      name: '/show',
+      page: () => const ShowItem(),
+      bindings: [HomeBinding()],
+    ),
   ];
 }

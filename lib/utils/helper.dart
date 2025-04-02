@@ -1,9 +1,12 @@
+import 'package:depenses/screens/home/controllers/home_controller.dart';
 import 'package:depenses/screens/widgets/button.dart';
 import 'package:depenses/utils/colors.dart';
 import 'package:depenses/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+final HomeController _homeController = Get.find<HomeController>();
 
 Text buttonText({label, color}) {
   return Text(label, style: color);
@@ -197,4 +200,76 @@ String formatMontant(int montant) {
   return NumberFormat.currency(locale: 'fr_FR', symbol: '', decimalDigits: 0)
       .format(montant)
       .replaceAll('\u202F', ' ');
+}
+
+//Modal de suppression
+Future<bool> deleteModal({
+  required context,
+  required String content,
+  required int id,
+}) {
+  return Get.dialog(
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(AppSize.buttonPaddingHorizontal),
+          margin:
+              const EdgeInsets.symmetric(horizontal: AppSize.paddingHorizontal),
+          decoration: BoxDecoration(
+              color: AppColor.backgroundColorWhite,
+              borderRadius: BorderRadius.circular(AppSize.borderRadius)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: Image.asset('assets/images/trash.png'),
+              ),
+              spaceHeight(22.0),
+              text(
+                  label: content,
+                  fontSize: AppSize.subtitle,
+                  extra: {'textAlign': TextAlign.center}),
+              spaceHeight(18.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Obx(() {
+                    return ButtonWidget(
+                      label: 'Valider',
+                      labelSize: AppSize.text,
+                      verticalPadding: AppSize.buttonWidgetPaddingVertical,
+                      horizontalPadding: AppSize.buttonWidgetPaddingHorizontal,
+                      buttonColor: AppColor.buttonLightColor,
+                      loading: _homeController.loadingToDelete.value,
+                      onPressed: () async {
+                        final response =
+                            await _homeController.deleteHistorique(id: id);
+                        Navigator.of(context).pop(response);
+                      },
+                    );
+                  }),
+                  spaceWidth(10.0),
+                  ButtonWidget(
+                    label: 'Fermer',
+                    labelSize: AppSize.text,
+                    verticalPadding: AppSize.buttonWidgetPaddingVertical,
+                    horizontalPadding: AppSize.buttonWidgetPaddingHorizontal,
+                    border: true,
+                    labelColor: AppColor.textColor,
+                    buttonColor: AppColor.backgroundColor,
+                    borderColor: const Color.fromARGB(255, 140, 140, 140),
+                    onPressed: () => Navigator.of(context).pop(false),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+    name: 'Delete',
+  ).then((value) => value ?? false);
 }

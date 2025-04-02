@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
   final TextEditingController _libelleController = TextEditingController();
   final TextEditingController _montantController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  int typeSelected = 0;
 
   //Selection de date pour l'historique
   Future<void> _selectedDate(BuildContext context) async {
@@ -100,8 +101,6 @@ class _HomeState extends State<Home> {
     {"title": "Dépense", "value": 1},
   ];
 
-  int typeSelected = 0;
-
   @override
   void initState() {
     super.initState();
@@ -110,8 +109,21 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    //Remettre les champs et valeurs à l'initial
+    void clearData() {
+      _libelleController.clear();
+      _montantController.clear();
+      _descriptionController.clear();
+      _homeController.libelleError.value = "";
+      _homeController.montantError.value = "";
+      _homeController.typeSelectedToCreate.value = 0;
+      _homeController.selectedDateToCreate.value = DateTime.now();
+      _homeController.formattedDateToCreate.value =
+          DateFormat('dd MMM yyyy', 'fr_FR').format(DateTime.now());
+    }
+
     //Envoie verification des datas et envoie au server
-    void saveData() {
+    void saveData({int? itemId}) async {
       final libelle = _libelleController.text;
       final montant = _montantController.text;
       final description = _descriptionController.text;
@@ -135,15 +147,33 @@ class _HomeState extends State<Home> {
       }
 
       //Envoie du formulaire
-      _homeController.createHistorique(
-          libelle: libelle,
-          montant: int.parse(montant),
-          description: description);
+      await _homeController.createOrUpdateHistorique(
+        libelle: libelle,
+        montant: int.parse(montant),
+        description: description,
+        id: itemId,
+      );
 
-      //print('ok');
+      //On vide les champs du formulaire
+      clearData();
     }
 
-    void openPopup() {
+    //Recuperation des datas pour la modification
+    void getDataToUpdate(historique) {
+      _libelleController.text = historique.libelle;
+      _montantController.text = historique.montant.toString();
+      _descriptionController.text = historique.description ?? "";
+      _homeController.typeSelectedToCreate.value = historique.type;
+      _homeController.selectedDateToCreate.value = historique.date;
+
+      _homeController.formattedDateToCreate.value =
+          DateFormat('dd MMM yyyy', 'fr_FR').format(historique.date);
+    }
+
+    //Ouverture du popup pour le formulaire
+    void openPopup({
+      int? itemId,
+    }) {
       Get.dialog(
         Material(
           color: Colors.transparent,
@@ -165,7 +195,10 @@ class _HomeState extends State<Home> {
                       children: [
                         Expanded(child: title(label: 'Nouvelle dépenses')),
                         GestureDetector(
-                          onTap: () => Get.back(),
+                          onTap: () {
+                            Get.back();
+                            clearData();
+                          },
                           child: Container(
                             padding: const EdgeInsets.all(10.0),
                             decoration: BoxDecoration(
@@ -294,7 +327,7 @@ class _HomeState extends State<Home> {
                           verticalPadding: AppSize.paddingVertical,
                           horizontalPadding: 10.0,
                           buttonColor: AppColor.buttonLightColor,
-                          onPressed: () => saveData(),
+                          onPressed: () => saveData(itemId: itemId),
                           loading: _homeController.loadingToCreate.value,
                         );
                       }),
@@ -382,8 +415,57 @@ class _HomeState extends State<Home> {
                                     itemCount:
                                         _homeController.historiques.length,
                                     itemBuilder: (context, index) =>
-                                        HistoriqueItem(
-                                      item: _homeController.historiques[index],
+                                        Dismissible(
+                                      key: Key(index.toString()),
+                                      direction: DismissDirection.horizontal,
+                                      background: Container(
+                                        color: AppColor.darkTextColor,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: AppSize.bodyPadding),
+                                        alignment: Alignment.centerLeft,
+                                        child: SvgPicture.asset(
+                                          'assets/icons/edit.svg',
+                                          color: AppColor.backgroundColorWhite,
+                                        ),
+                                      ),
+                                      secondaryBackground: Container(
+                                        color: AppColor.errorColor,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: AppSize.bodyPadding),
+                                        alignment: Alignment.centerRight,
+                                        child: SvgPicture.asset(
+                                          'assets/icons/trash.svg',
+                                          color: AppColor.backgroundColorWhite,
+                                        ),
+                                      ),
+                                      confirmDismiss: (direction) async {
+                                        if (direction ==
+                                            DismissDirection.endToStart) {
+                                          //Suppression d'une ligne
+                                          final response = await deleteModal(
+                                            context: context,
+                                            content:
+                                                'Êtes-vous sûre de vouloir supprimer cette ligne ?',
+                                            id: _homeController
+                                                .historiques[index].id,
+                                          );
+
+                                          return response;
+                                        } else {
+                                          //Modification d'une ligne
+                                          getDataToUpdate(_homeController
+                                              .historiques[index]);
+                                          openPopup(
+                                              itemId: _homeController
+                                                  .historiques[index].id);
+                                        }
+
+                                        return Future.value(false);
+                                      },
+                                      child: HistoriqueItem(
+                                        item:
+                                            _homeController.historiques[index],
+                                      ),
                                     ),
                                   )
                                 : Center(

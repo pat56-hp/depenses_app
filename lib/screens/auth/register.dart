@@ -1,4 +1,5 @@
 import 'package:depenses/core/controllers/authController.dart';
+import 'package:depenses/screens/widgets/appbar_return_back.dart';
 import 'package:depenses/screens/widgets/button.dart';
 import 'package:depenses/screens/widgets/input_widget.dart';
 import 'package:depenses/utils/colors.dart';
@@ -58,23 +59,7 @@ class _RegisterState extends State<Register> {
           backgroundColor: AppColor.backgroundColorWhite,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            leading: Container(
-              padding: const EdgeInsets.all(8),
-              child: GestureDetector(
-                onTap: () => Get.back(),
-                child: Card(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: AppColor.buttonDarkColor),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: SvgPicture.asset(
-                    'assets/icons/icon-left.svg',
-                    color: AppColor.buttonDarkColor,
-                  ),
-                ),
-              ),
-            ),
+            leading: const AppBarReturnBack(),
           ),
           body: SafeArea(
             child: Center(

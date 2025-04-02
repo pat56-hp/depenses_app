@@ -131,6 +131,7 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       loading.value = false;
+      socialiteController.loadingFinish();
       print('######## Une erreur inattendue s\'est produite : $e');
     }
   }

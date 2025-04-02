@@ -85,4 +85,8 @@ class ApiService {
   static Future get(String path, {Map<String, dynamic>? query}) async {
     return await _dio.get(path, queryParameters: query);
   }
+
+  static Future delete(String path, {Map<String, dynamic>? query}) async {
+    return await _dio.delete(path, queryParameters: query);
+  }
 }

@@ -24,6 +24,7 @@ class HomeController extends GetxController {
 
   RxBool loadingToList = false.obs;
   RxBool loadingToCreate = false.obs;
+  RxBool loadingToDelete = false.obs;
   RxString libelleError = "".obs;
   RxString montantError = "".obs;
 
@@ -42,6 +43,9 @@ class HomeController extends GetxController {
       totalDepenses.value = datas['depenses'];
       totalRevenues.value = datas['revenus'];
 
+      //
+      //print('Liste des historiques : ' + datas.toString());
+
       //Mise à jour de la liste
       historiques.value = (historiqueResponseData as List)
           .map((historique) => Historique.fromJson(historique))
@@ -56,24 +60,24 @@ class HomeController extends GetxController {
   }
 
   //Création d'une nouvelle entrée ou sortie
-  Future<void> createHistorique(
+  Future<void> createOrUpdateHistorique(
       {required String libelle,
       required int montant,
-      String? description}) async {
+      String? description,
+      int? id}) async {
     loadingToCreate.value = true;
 
     try {
-      final response = await ApiService.post(ApiEndPoint.historique, {
+      await ApiService.post(ApiEndPoint.historique, {
         "libelle": libelle,
         "description": description,
         "montant": montant,
         "date": selectedDateToCreate.value.toString(),
         "type": typeSelectedToCreate.value,
+        "id": id
       });
 
       loadingToCreate.value = false;
-
-      //loadingToList.value = false;
 
       //On ferme le modal
       Get.back();
@@ -84,19 +88,38 @@ class HomeController extends GetxController {
       selectedDateToList.value = selectedDateToCreate.value;
       formattedDateToList.value = formattedDateToCreate.value;
 
-      //On met les valeurs a l'initial
-      libelleError.value = "";
-      montantError.value = "";
-      selectedDateToCreate.value = DateTime.now();
-      typeSelectedToCreate.value = 0;
-      libelleError.value = "";
-
       historique();
     } catch (e) {
       loadingToCreate.value = false;
-      loadingToList.value = false;
       print(
           "Une erreur s'est produite lors de la creation de l'historique : ${e.toString()}");
+    }
+  }
+
+  //Suppression d'une entrée ou sortie
+  Future<bool> deleteHistorique({
+    required int id,
+  }) async {
+    loadingToDelete.value = true;
+
+    try {
+      final response =
+          await ApiService.delete("${ApiEndPoint.deleteHistorique}/$id");
+
+      final datas = response.data;
+      solde.value = datas['solde'];
+      totalDepenses.value = datas['depenses'];
+      totalRevenues.value = datas['revenus'];
+      //historiques.removeWhere((historique) => historique.id == id);
+
+      historique();
+      loadingToDelete.value = false;
+      return true;
+    } catch (e) {
+      loadingToDelete.value = false;
+      print(
+          "Une erreur s'est produite lors de la suppression de l'historique : ${e.toString()}");
+      return false;
     }
   }
 }

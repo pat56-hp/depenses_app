@@ -158,7 +158,7 @@ class _LoginState extends State<Login> {
                     ),
                     spaceHeight(40.0),
                     const Socialite(),
-                    spaceHeight(50.0),
+                    spaceHeight(40.0),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       text(
                           label: 'Pas encore inscris ?',
